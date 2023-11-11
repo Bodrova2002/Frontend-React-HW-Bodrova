@@ -1,0 +1,10 @@
+$primary-color: blue;
+$secondary-color: green;
+
+// Example of conditional styling
+$use-primary-color: true;
+
+.container {
+  // Conditional style using variable binding
+  background-color: if($use-primary-color, $primary-color, $secondary-color);
+}

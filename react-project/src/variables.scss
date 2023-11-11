@@ -1,0 +1,9 @@
+$mainColor: #282c34;
+$headingFontSize: calc(10px + 2vmin);
+$mainFont: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+@mixin heading-styles {
+  font-family: $mainFont;
+  font-size: $headingFontSize;
+  font-weight: bold;
+}
