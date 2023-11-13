@@ -1,0 +1,55 @@
+// Variables
+$font-stack-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+$font-stack-monospace: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+// Mixins
+@mixin article-card($bg-color, $text-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+@mixin font-settings($font-stack) {
+  font-family: $font-stack;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Media queries
+$desktop: 800px;
+$tablet: 600px;
+$mobile: 400px;
+
+// Body styles
+body {
+  margin: 0;
+  @include font-settings($font-stack-sans-serif);
+
+  // Media query for tablet and smaller screens
+  @media (max-width: $tablet) {
+    font-size: 16px;
+  }
+}
+
+// Code styles
+code {
+  font-family: $font-stack-monospace;
+}
+
+// Conditional styles with modular approach
+@import 'conditional-styles';
+
+// Nesting example
+.container {
+  width: 100%;
+
+  .article {
+    @include article-card(#fff, #333);
+
+    // Nested conditional style
+    &.highlighted {
+      @include article-card(yellow, #333);
+    }
+  }
+}
