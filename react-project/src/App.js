@@ -13,6 +13,8 @@ const App = () => {
 
   useEffect(() => {
     const fetchArticles = async () => {
+      // Здесь должен быть ваш реальный код для получения списка статей
+      // Предположим, что вы получаете данные в формате { articleId, title }
       const data = await getArticles();
       const articlesWithShowComments = data.map((article) => ({
         ...article,
@@ -30,7 +32,6 @@ const App = () => {
       // Fetch cards data here
       setIsLoading(false);
     };
-
     fetchCards();
   }, []);
 
@@ -47,7 +48,6 @@ const App = () => {
       setCards(updatedCards);
       setIsLoading(false);
     };
-
     fetchCardComments();
   }, [cards]);
 
@@ -79,7 +79,6 @@ const App = () => {
       }
       return article;
     });
-
     setArticles(updatedArticles);
 
     const updatedComments = [...comments, newComment];
@@ -100,7 +99,6 @@ const App = () => {
       }
       return article;
     });
-
     setArticles(updatedArticles);
   };
 
@@ -108,11 +106,25 @@ const App = () => {
     const newCard = {
       cardId: Math.random().toString(),
       title: cardTitle,
+      creationDate: new Date(),  // Добавляем дату создания карточки
       comments: [],
       commentsCount: 0,
+      likes: 0,  // Предположим, что у карточек есть поле для числа лайков
     };
+
     setCards([...cards, newCard]);
   };
+
+  const sortCardsByCreationDate = () => {
+    const sortedCards = [...cards].sort((a, b) => new Date(a.creationDate) - new Date(b.creationDate));
+    setCards(sortedCards);
+  }
+
+  const sortCardsByLikes = () => {
+    const sortedCards = [...cards].sort((a, b) => b.likes - a.likes);
+    setCards(sortedCards);
+  }
+
   return (
       <div>
         <h1>Статьи</h1>
@@ -125,11 +137,12 @@ const App = () => {
               </button>
               {article.showComments && (
                   <>
-                    <CommentList article={article}
-                                 comments={comments}
-                                 onDeleteComment={(commentId) =>
-                                     handleCommentDeleted(article.articleId, commentId)
-                                 }
+                    <CommentList
+                        article={article}
+                        comments={comments}
+                        onDeleteComment={(commentId) =>
+                            handleCommentDeleted(article.articleId, commentId)
+                        }
                     />
                     <AddComment
                         articleId={article.articleId}
@@ -142,10 +155,14 @@ const App = () => {
             </div>
         ))}
         <h1>Карточки</h1>
+        <button onClick={sortCardsByCreationDate}>Сортировать по дате создания</button>
+        <button onClick={sortCardsByLikes}>Сортировать по числу лайков</button>
         <AddCard onAddCard={handleAddCard} />
         {cards.map((card) => (
             <div key={card.cardId}>
+              {/* Отображение карточки с учетом даты создания, лайков и всего остального */}
               <h2>{card.title}</h2>
+              <p>Дата создания: {card.creationDate.toISOString()}</p>
               <p>Комментарии: {card.commentsCount}</p>
               <CommentList
                   article={card}
@@ -167,3 +184,4 @@ const App = () => {
 };
 
 export default App;
+
