@@ -12,6 +12,9 @@ const AddComment = ({ onAddComment }) => {
             const newComment = {
                 id: new Date().getTime(),
                 text: commentText,
+                createdAt: new Date(), // Добавляем дату создания комментария
+                likes: 0, // Инициализируем количество лайков
+                editable: true // Устанавливаем возможность редактирования
             };
             onAddComment(newComment);
             setCommentText('');
@@ -25,5 +28,6 @@ const AddComment = ({ onAddComment }) => {
         </div>
     );
 };
-
 export default AddComment;
+
+
