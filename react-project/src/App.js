@@ -4,6 +4,8 @@ import CommentList from './components/CommentList';
 import AddComment from './components/AddComment';
 import AddCard from './components/AddCard';
 import { getComments } from './get-comments-by-article';
+import { connect } from 'react-redux';
+import { addCard, addComment, deleteComment, likeComment } from './actions';
 
 const App = () => {
   const [articles, setArticles] = useState([]);
@@ -111,10 +113,8 @@ const App = () => {
       commentsCount: 0,
       likes: 0,  // Предположим, что у карточек есть поле для числа лайков
     };
-
     setCards([...cards, newCard]);
   };
-
   const sortCardsByCreationDate = () => {
     const sortedCards = [...cards].sort((a, b) => new Date(a.creationDate) - new Date(b.creationDate));
     setCards(sortedCards);
@@ -182,6 +182,8 @@ const App = () => {
       </div>
   );
 };
-
 export default App;
+
+
+
 
