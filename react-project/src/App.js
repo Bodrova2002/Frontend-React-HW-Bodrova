@@ -6,6 +6,7 @@ import AddCard from './components/AddCard';
 import { getComments } from './get-comments-by-article';
 import { connect } from 'react-redux';
 import { addCard, addComment, deleteComment, likeComment } from './actions';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 const App = () => {
   const [articles, setArticles] = useState([]);
@@ -125,6 +126,48 @@ const App = () => {
     setCards(sortedCards);
   }
 
+  return (<Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Домашняя страница</Link>
+              </li>
+              <li>
+                <Link to="/articles">Статьи</Link>
+              </li>
+              <li>
+                <Link to="/cards">Карточки</Link>
+              </li>
+            </ul>
+          </nav>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+                path="/articles"
+                element={
+                  <ArticleListPage
+                      articles={articles}
+                      handleCommentClicked={handleCommentClicked}
+                      comments={comments}
+                      handleCommentAdded={handleCommentAdded}
+                      handleCommentDeleted={handleCommentDeleted}
+                  />
+                }
+            />
+            <Route path="/cards" element={<CardListPage cards={cards} sortCardsByCreationDate={sortCardsByCreationDate} sortCardsByLikes={sortCardsByLikes} handleAddCard={handleAddCard} handleCommentDeleted={handleCommentDeleted} handleCommentAdded={handleCommentAdded} />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </Router>
+  );
+};
+
+function Home() {
+  return <h1>Домашняя страница</h1>;
+}
+
+function ArticleListPage({ articles, handleCommentClicked, comments, handleCommentAdded, handleCommentDeleted }) {
   return (
       <div>
         <h1>Статьи</h1>
@@ -154,6 +197,14 @@ const App = () => {
               )}
             </div>
         ))}
+      </div>
+  );
+}
+
+
+function CardListPage({ cards, sortCardsByCreationDate, sortCardsByLikes, handleAddCard, handleCommentDeleted, handleCommentAdded }) {
+  return (
+      <div>
         <h1>Карточки</h1>
         <button onClick={sortCardsByCreationDate}>Сортировать по дате создания</button>
         <button onClick={sortCardsByLikes}>Сортировать по числу лайков</button>
@@ -181,7 +232,11 @@ const App = () => {
         ))}
       </div>
   );
-};
+}
+
+function NotFound() {
+  return <h1>404 - Страница не найдена</h1>;
+}
 export default App;
 
 
