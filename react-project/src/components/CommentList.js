@@ -7,10 +7,6 @@ const CommentList = ({ article, comments, onDeleteComment }) => {
         setSortedComments(comments); // Обновляем sortedComments при изменении comments
     }, [comments]);
 
-    const handleDeleteComment = (commentId) => {
-        onDeleteComment(article.articleId, commentId);
-    };
-
     const sortCommentsByDate = () => {
         const sorted = [...comments].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         setSortedComments(sorted);
@@ -29,6 +25,10 @@ const CommentList = ({ article, comments, onDeleteComment }) => {
             return comment;
         });
         setSortedComments([...updatedComments].sort((a, b) => b.likes - a.likes));
+    };
+
+    const handleDeleteComment = (commentId) => {
+        onDeleteComment(article.articleId, commentId);
     };
 
     return (
