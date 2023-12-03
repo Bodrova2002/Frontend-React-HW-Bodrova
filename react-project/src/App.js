@@ -7,6 +7,8 @@ import { getComments } from './get-comments-by-article';
 import { connect } from 'react-redux';
 import { addCard, addComment, deleteComment, likeComment } from './actions';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import AuthorizationForm from './AuthorizationForm';
+import HashUserIdComponent from './HashUserIdComponent';
 
 const App = () => {
   const [articles, setArticles] = useState([]);
@@ -157,6 +159,8 @@ const App = () => {
             />
             <Route path="/cards" element={<CardListPage cards={cards} sortCardsByCreationDate={sortCardsByCreationDate} sortCardsByLikes={sortCardsByLikes} handleAddCard={handleAddCard} handleCommentDeleted={handleCommentDeleted} handleCommentAdded={handleCommentAdded} />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/auth" component={AuthorizationForm} />
+            <HashUserIdComponent userId={userId} />
           </Routes>
         </div>
       </Router>
