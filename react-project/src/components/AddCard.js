@@ -1,4 +1,5 @@
 import React, { useReducer, useCallback, useEffect } from 'react';
+import { authenticate } from '../authMockAPI'; // Imported only authenticate function
 
 const initialState = { cardTitle: '' };
 
@@ -29,12 +30,26 @@ const AddCard = ({ onAddCard }) => {
         console.log('Пользователь посетил страницу для добавления карточки');
     }, []);
 
+    const handleAuthAndAddCard = () => {
+        const username = 'username1'; // Замените на логику получения имени пользователя из формы
+        const password = 'password1'; // Замените на логику получения пароля из формы
+
+        if (authenticate(username, password)) {
+            console.log('Пользователь успешно авторизован');
+            handleAddCard();
+        } else {
+            console.log('Неправильное имя пользователя или пароль');
+        }
+    };
+
     return (
         <div>
             <input type="text" value={state.cardTitle} onChange={handleTitleChange} />
-            <button onClick={handleAddCard}>Add Card</button>
+            <button onClick={handleAddCard}>Добавить карточку</button>
+            <button onClick={handleAuthAndAddCard}>Войти для добавления карточки</button>
         </div>
     );
 };
 
 export default AddCard;
+
